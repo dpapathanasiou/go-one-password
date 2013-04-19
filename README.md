@@ -14,7 +14,7 @@ Building and Installing
 This code requires Go's <a href="https://code.google.com/p/go/source/browse/scrypt/scrypt.go?repo=crypto">scrypto package</a> before building:
 
 ```
-$ sudo go get code.google.com/p/go.crypto/scrypt
+$ go get code.google.com/p/go.crypto/scrypt
 $ go build go-one-password.go
 ```
 
