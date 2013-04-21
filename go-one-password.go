@@ -4,9 +4,9 @@ This code creates a small, self-contained binary executable which runs on the co
 capable of generating a unique password for different sites and usernames based on a single,
 private (i.e., known only to the person running this program) passphrase.
 
-This code requires the scrypto package, so run:
+This code requires the scrypt package, so run:
 
-$ sudo go get code.google.com/p/go.crypto/scrypt
+$ go get code.google.com/p/go.crypto/scrypt
 
 before trying to build.
 
@@ -71,18 +71,17 @@ var (
     HAS_UPPERCASE   = regexp.MustCompile("[A-Z]{1,5}")
     HAS_LOWERCASE   = regexp.MustCompile("[a-z]{1,5}")
     HAS_NUMERICS    = regexp.MustCompile("[0-9]{1,5}")
-    PWD_LEN         = 16
 )
 
 // pwdIsValid checks the string created by getCandidatePwd and returns a boolean depending on whether or not it meets the criteria:
-// the first 16 characters are all alphanumeric, and there is at least one (but no more than 5) uppercase, lowercase and numeric characters
-func pwdIsValid(pwd string) bool {
+// the first pwdLen characters are all alphanumeric, and there is at least one (but no more than 5) uppercase, lowercase and numeric characters
+func pwdIsValid(pwd string, pwdLen int) bool {
     result := false
-    // make sure the first 16 characters are all alphanumeric
+    // make sure the first pwdLen characters are all alphanumeric
     i := IS_ALPHANUMERIC.FindSubmatchIndex([]byte(pwd))
-    if i != nil && i[0] == 0 && i[1] >= PWD_LEN {
+    if i != nil && i[0] == 0 && i[1] >= pwdLen {
         // now make sure there is at least one (but no more than 5) uppercase, lowercase and numeric characters
-        pwdPrefix := []byte(pwd[0:PWD_LEN])
+        pwdPrefix := []byte(pwd[0:pwdLen])
         if HAS_UPPERCASE.Match(pwdPrefix) && HAS_LOWERCASE.Match(pwdPrefix) && HAS_NUMERICS.Match(pwdPrefix) {
             result = true
         }
@@ -92,12 +91,19 @@ func pwdIsValid(pwd string) bool {
 
 func main() {
 
-    var passphrase, username, hostname, specials, result string
-    const defaultInput = ""
+    var (
+        passphrase, username, hostname, specials, result string
+        passwordLength                                   int
+    )
+    const (
+        defaultInput  = ""
+        defaultPwdLen = 16
+    )
 
     flag.StringVar(&hostname, "host", defaultInput, "(required) the website you want to login to (e.g. \"amazon.com\")")
     flag.StringVar(&username, "user", defaultInput, "(required) the username or email address you use to login")
     flag.StringVar(&specials, "spec", defaultInput, "(optional) if the website requires one or more \"special\" characters in the password (e.g., \"#%*\" etc.) specify one or more of them here")
+    flag.IntVar(&passwordLength, "plen", defaultPwdLen, fmt.Sprintf("(optional) set the resulting password length (the default is %d)", defaultPwdLen))
     flag.Parse()
 
     if len(hostname) < 1 && len(username) < 1 {
@@ -117,10 +123,10 @@ func main() {
         // keep generating passwords (using an updated iteration number) until we get one that meets the pwdIsValid() criteria
         for !valid {
             result = getCandidatePwd(passphrase, username, hostname, 12, i)
-            valid = pwdIsValid(result)
+            valid = pwdIsValid(result, passwordLength)
             i += 1
         }
-        // success: display the result (the first PWD_LEN characters, interspersed with special chars in the middle, if any)
-        fmt.Print(fmt.Sprintf("Your password for %s logging in as user %s is:\n\n%s\n\n", hostname, username, strings.Join([]string{result[0 : PWD_LEN/2], specials, result[PWD_LEN/2 : PWD_LEN]}, "")))
+        // success: display the result (the first passwordLength characters, with special chars at the end, if any)
+        fmt.Print(fmt.Sprintf("Your password for %s logging in as user %s is:\n\n%s\n\n", hostname, username, strings.Join([]string{result[0:(passwordLength - len(specials))], specials}, "")))
     }
 }

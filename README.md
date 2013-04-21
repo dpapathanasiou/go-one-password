@@ -11,7 +11,7 @@ The technical implementation is similar, i.e., HMAC-SHA512() hashing a combinati
 Building and Installing
 -----------------------
 
-This code requires Go's <a href="https://code.google.com/p/go/source/browse/scrypt/scrypt.go?repo=crypto">scrypto package</a> before building:
+This code requires Go's <a href="https://code.google.com/p/go/source/browse/scrypt/scrypt.go?repo=crypto">scrypt package</a> before building:
 
 ```
 $ go get code.google.com/p/go.crypto/scrypt
@@ -35,6 +35,7 @@ If you forget how to use go-one-password type it (or whatever alias you've used 
 $ g1p -help
 Usage of g1p:
   -host="": (required) the website you want to login to (e.g. "amazon.com")
+  -plen=16: (optional) set the resulting password length (the default is 16)
   -spec="": (optional) if the website requires one or more "special" characters in the password (e.g., "#%*" etc.) specify one or more of them here
   -user="": (required) the username or email address you use to login
 ```
@@ -60,6 +61,6 @@ $ g1p -host example.org -user me@example.com -spec="#%"
 What's your passphrase? (or ctrl-c to quit) close introduced when lunch
 Your password for example.org logging in as user me@example.com is:
 
-o95gZHxe#%h7D9LYnp
+o95gZHxeh7D9LY#%
 
 ```
