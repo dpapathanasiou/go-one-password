@@ -1,4 +1,4 @@
-/* go-one-password.go
+/* onepassword.go
 
    This is a Go library capable of generating a unique password for
    different sites and usernames based on a single, private (i.e.,
@@ -9,7 +9,6 @@
 package onepassword
 
 import (
-	"bufio"
 	"bytes"
 	"code.google.com/p/go.crypto/scrypt"
 	"crypto/hmac"
@@ -17,7 +16,6 @@ import (
 	"encoding/base64"
 	"fmt"
 	"os"
-	"os/exec"
 	"regexp"
 	"strings"
 )

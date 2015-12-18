@@ -7,7 +7,7 @@
 package main
 
 import (
-	"github.com/dpapathanasiou/go-one-password"
+	"github.com/dpapathanasiou/go-one-password/onepassword"
 	"github.com/mattn/go-gtk/glib"
 	"github.com/mattn/go-gtk/gtk"
 	"strconv"

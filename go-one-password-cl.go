@@ -11,7 +11,7 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
-	"github.com/dpapathanasiou/go-one-password"
+	"github.com/dpapathanasiou/go-one-password/onepassword"
 	"os"
 	"os/exec"
 	"strings"
