@@ -11,21 +11,9 @@ The technical implementation is similar, i.e., HMAC-SHA512() hashing a combinati
 Building and Installing
 -----------------------
 
-This code requires Go's <a href="https://code.google.com/p/go/source/browse/scrypt/scrypt.go?repo=crypto">scrypt package</a> before building:
-
-```sh
-$ go get code.google.com/p/go.crypto/scrypt
-```
-
-<i>As of this writing (December 2015), this results in the following warning; it is not clear how much longer scrypt will be available, or where it will move in the future:</i>
-
-```sh
-warning: code.google.com is shutting down; import path code.google.com/p/go.crypto/scrypt will stop working
-```
-
 This program now comes in two versions, a command line interface (cli), and a graphical user interface (gui).
 
-In order to build the gui version, you will also need this library (optional):
+In order to build the gui version, you will need this library (optional):
 
 ```sh
 $ go get github.com/mattn/go-gtk/gtk
@@ -33,7 +21,7 @@ $ go get github.com/mattn/go-gtk/gtk
 
 Note that [go-gtk](http://mattn.github.io/go-gtk/) requires that the [GTK-Development packages](https://github.com/mattn/go-gtk#install) for your system are already installed.
 
-Finally, import this library as well (required):
+Next, import this repository (required):
 
 ```sh
 $ go get github.com/dpapathanasiou/go-one-password

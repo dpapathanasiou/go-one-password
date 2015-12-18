@@ -10,11 +10,11 @@ package onepassword
 
 import (
 	"bytes"
-	"code.google.com/p/go.crypto/scrypt"
 	"crypto/hmac"
 	"crypto/sha512"
 	"encoding/base64"
 	"fmt"
+	"golang.org/x/crypto/scrypt"
 	"os"
 	"regexp"
 	"strings"
