@@ -4,7 +4,7 @@ go-one-password
 About
 -----
 
-This project is inspired by <a href="https://github.com/maxtaco/oneshallpass">oneshallpass</a> but is written in <a href="http://golang.org/">Go</a> instead of javascript, and runs on the command line as a self-contained, statically compiled binary, instead of a web browser.
+This project is inspired by <a href="https://github.com/maxtaco/oneshallpass">oneshallpass</a> but is written in <a href="http://golang.org/">Go</a> instead of javascript, and runs as a self-contained, statically compiled binary, either on the command line or as a gui, instead of a web browser.
 
 The technical implementation is similar, i.e., HMAC-SHA512() hashing a combination of the host, username, generator and indicator numbers, but using <a href="http://www.tarsnap.com/scrypt.html">scrypt</a> instead of <a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a> for generating the shared private key (dk) value from the <a href="https://en.wikipedia.org/wiki/Passphrase">passphrase</a>.
 
