@@ -13,12 +13,51 @@ Building and Installing
 
 This code requires Go's <a href="https://code.google.com/p/go/source/browse/scrypt/scrypt.go?repo=crypto">scrypt package</a> before building:
 
-```
+```sh
 $ go get code.google.com/p/go.crypto/scrypt
-$ go build go-one-password.go
 ```
 
-Update your $PATH to include the folder where go-one-password was built, and add a shorter alias, if you prefer (e.g., "g1p", assuming that doesn't conflict with anything on your system).
+<i>As of this writing (December 2015), this results in the following warning; it is not clear how much longer scrypt will be available, or where it will move in the future:</i>
+
+```sh
+warning: code.google.com is shutting down; import path code.google.com/p/go.crypto/scrypt will stop working
+```
+
+This program now comes in two versions, a command line interface (cli), and a graphical user interface (gui).
+
+In order to build the gui version, you will also need this library (optional):
+
+```sh
+$ go get github.com/mattn/go-gtk/gtk
+```
+
+Note that [go-gtk](http://mattn.github.io/go-gtk/) requires that the [GTK-Development packages](https://github.com/mattn/go-gtk#install) for your system are already installed.
+
+Finally, import this library as well (required):
+
+```sh
+$ go get github.com/dpapathanasiou/go-one-password
+```
+
+Use the [Makefile](Makefile) to build either or both versions:
+
+```sh
+$ make all # build both the cli and gui versions
+$ make cli # build just the cli version
+$ make gui # build just the gui version
+```
+
+### Command Line Interface Version
+
+The resulting binary is <tt>go-one-password-cl</tt>.
+
+Update your $PATH to include the folder where go-one-password-cl was built, and add a shorter alias, if you prefer (e.g., "g1p", assuming that doesn't conflict with anything on your system).
+
+### Graphical User Interface Version
+
+The resulting binary is <tt>go-one-password-ui</tt>.
+
+You can add a launcher from your desktop menu to run it that way, if you prefer.
 
 Usage
 -----
@@ -29,7 +68,9 @@ There are <a href="http://www.queen.clara.net/pgp/pass.html">many</a> different 
 
 Once you settle on a passphrase, just *make sure you commit it to memory*; it's not stored anywhere by this code, and if lost or forgotten, is unrecoverable.
 
-If you forget how to use go-one-password type it (or whatever alias you've used for it) in a shell prompt followed by "-help":
+### Command Line Interface Version
+
+If you forget how to use go-one-password-cl type it (or whatever alias you've used for it) in a shell prompt followed by "-help":
 
 ```
 $ g1p -help
@@ -40,10 +81,11 @@ Usage of g1p:
   -user="": (required) the username or email address you use to login
 ```
 
-Usage Examples
---------------
+#### Usage Examples
 
-Here's how to use it in practice (the passphrase is asked in an interactive prompt, instead of from a command line argument, because we don't want to save the passphrase in your shell history by accident):
+Here's how to use it in practice (the passphrase is asked in an interactive prompt, instead of from a command line argument, because we don't want to save the passphrase in your shell history by accident).
+
+Note that while the passphrase is hidden on Linux systems, it appears as viewable text on Windows and Mac OSX Terminal. To keep the passphrase text hidden on those systems, use the gui version instead.
 
 ```
 $ g1p -host example.org -user me@example.com
@@ -51,7 +93,6 @@ What's your passphrase? (or ctrl-c to quit) close introduced when lunch
 Your password for example.org logging in as user me@example.com is:
 
 o95gZHxeh7D9LYnp
-
 ```
 
 This is another example, for when the site requires one or more "special" characters:
@@ -62,5 +103,10 @@ What's your passphrase? (or ctrl-c to quit) close introduced when lunch
 Your password for example.org logging in as user me@example.com is:
 
 o95gZHxeh7D9LY#%
-
 ```
+
+### Graphical User Interface Version
+
+The gui version supports all the same features of the cli version, with the additional benefit that it hides the passphrase by default, which is something the cli version on Windows and Mac OSX Terminal cannot do.
+
+[screenshot coming soon]
