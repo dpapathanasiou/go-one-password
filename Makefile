@@ -1,5 +1,4 @@
 SHELL = /bin/sh
-CC    = gcc
 
 %: %.go
 	go build -o $@ $^
