@@ -8,29 +8,19 @@
 package main
 
 import (
-	"bufio"
 	"flag"
 	"fmt"
-	"github.com/dpapathanasiou/go-one-password/onepassword"
-	"os"
-	"os/exec"
 	"strings"
+	"github.com/dpapathanasiou/go-one-password/onepassword"
+	"github.com/howeyc/gopass"
 )
 
 // getPassphrase requests the passphrase string as a standard input prompt instead of the command line args
 // (because otherwise the passphrase would be visible in this user's shell history)
 func getPassphrase() string {
 	fmt.Print("What's your passphrase? (or ctrl-c to quit) ")
-	// do not display typed characters to appear on the screen (linux only)
-	exec.Command("stty", "-F", "/dev/tty", "-echo").Run()
-	reader := bufio.NewReader(os.Stdin)
-	passphrase, err := reader.ReadString('\n')
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Whoa, error! %s\n", err.Error())
-		return ""
-	}
-	// re-enable typed characters to appear on the screen
-	exec.Command("stty", "-F", "/dev/tty", "echo").Run()
+	// do not display typed characters to appear on the screen
+	passphrase := string(gopass.GetPasswd())
 	return strings.TrimSpace(passphrase)
 }
 
