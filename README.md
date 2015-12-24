@@ -21,9 +21,10 @@ $ go get github.com/mattn/go-gtk/gtk
 
 Note that [go-gtk](http://mattn.github.io/go-gtk/) requires that the [GTK-Development packages](https://github.com/mattn/go-gtk#install) for your system are already installed.
 
-Next, import this repository (required):
+Next, import these two repositories (required):
 
 ```sh
+$ go get github.com/howeyc/gopass
 $ go get github.com/dpapathanasiou/go-one-password
 ```
 
@@ -73,7 +74,7 @@ Usage of g1p:
 
 Here's how to use it in practice (the passphrase is asked in an interactive prompt, instead of from a command line argument, because we don't want to save the passphrase in your shell history by accident).
 
-Note that while the passphrase is hidden on Linux systems, it appears as viewable text on Windows and Mac OSX Terminal. To keep the passphrase text hidden on those systems, use the gui version instead.
+Note that while the passphrase is hidden on Mac OSX, Windows and Linux systems, it may appear as viewable text on other operating systems. To keep the passphrase text hidden on such systems, use the gui version instead.
 
 ```
 $ g1p -host example.org -user me@example.com
