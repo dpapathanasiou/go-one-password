@@ -96,6 +96,10 @@ o95gZHxeh7D9LY#%
 
 ### Graphical User Interface Version
 
-The gui version supports all the same features of the cli version, with the additional benefit that it hides the passphrase by default, which is something the cli version on Windows and Mac OSX Terminal cannot do.
+The gui version supports all the same features of the cli version, with the additional benefit that it hides the passphrase by default:
 
-[screenshot coming soon]
+![](http://i.imgur.com/FAPKYtm.png "Graphical User Interface Version")
+
+Passphrases can be made visible if desired, and "special" characters work too:
+
+![](http://i.imgur.com/cBqIWHi.png "Graphical User Interface Version")
