@@ -62,7 +62,7 @@ Once you settle on a passphrase, just *make sure you commit it to memory*; it's 
 If you forget how to use go-one-password-cl type it (or whatever alias you've used for it) in a shell prompt followed by "-help":
 
 ```
-$ g1p -help
+$ ./go-one-password-cl -help
 Usage of g1p:
   -host="": (required) the website you want to login to (e.g. "amazon.com")
   -plen=16: (optional) set the resulting password length (the default is 16)
@@ -103,3 +103,20 @@ The gui version supports all the same features of the cli version, with the addi
 Passphrases can be made visible if desired, and "special" characters work too:
 
 ![](http://i.imgur.com/cBqIWHi.png "Graphical User Interface Version")
+
+Launching the gui version with any of these command-line switches automatically pre-populates the corresponding fields in the input:
+
+```
+$ ./go-one-password-ui -help
+Usage of ./go-one-password-ui:
+  -host string
+    	the website you want to login to (e.g. "amazon.com")
+  -plen string
+    	set the resulting password length (the default is 16) (default "16")
+  -spec string
+    	if the website requires one or more "special" characters in the password (e.g., "#%*" etc.) specify one or more of them here
+  -user string
+    	the username or email address you use to login
+```
+
+Using these command-line switches to launch the gui is optional.
