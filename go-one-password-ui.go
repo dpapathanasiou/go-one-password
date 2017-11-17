@@ -7,6 +7,8 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"github.com/dpapathanasiou/go-one-password/onepassword"
 	"github.com/mattn/go-gtk/glib"
 	"github.com/mattn/go-gtk/gtk"
@@ -14,7 +16,10 @@ import (
 	"strings"
 )
 
-const SPEC_DEFAULT = "16"
+const (
+	INPUT_DEFAULT = ""
+	SPEC_DEFAULT  = "16"
+)
 
 func clearResult(win *gtk.TextView) {
 	var start, end gtk.TextIter
@@ -33,6 +38,14 @@ func setResult(win *gtk.TextView, tag *gtk.TextTag, msg string) {
 }
 
 func main() {
+	// provide an option to pre-fill the UI field inputs based on command line switches
+	var hostCL, userCL, specCL, pwdLenCL string
+	flag.StringVar(&hostCL, "host", INPUT_DEFAULT, "the website you want to login to (e.g. \"amazon.com\")")
+	flag.StringVar(&userCL, "user", INPUT_DEFAULT, "the username or email address you use to login")
+	flag.StringVar(&specCL, "spec", INPUT_DEFAULT, "if the website requires one or more \"special\" characters in the password (e.g., \"#%*\" etc.) specify one or more of them here")
+	flag.StringVar(&pwdLenCL, "plen", SPEC_DEFAULT, fmt.Sprintf("set the resulting password length (the default is %s)", SPEC_DEFAULT))
+	flag.Parse()
+
 	gtk.Init(nil)
 	window := gtk.NewWindow(gtk.WINDOW_TOPLEVEL)
 	window.SetPosition(gtk.WIN_POS_CENTER)
@@ -64,6 +77,7 @@ func main() {
 	hostlabel := gtk.NewLabel("Site Name")
 	hostlabel.SetJustify(gtk.JUSTIFY_RIGHT)
 	hostname := gtk.NewEntry()
+	hostname.SetText(hostCL)
 	hostbox.Add(hostlabel)
 	hostbox.Add(hostname)
 	credbox.PackStart(hostbox, false, false, 2)
@@ -72,6 +86,7 @@ func main() {
 	userlabel := gtk.NewLabel("Username")
 	userlabel.SetJustify(gtk.JUSTIFY_RIGHT)
 	username := gtk.NewEntry()
+	username.SetText(userCL)
 	userbox.Add(userlabel)
 	userbox.Add(username)
 	credbox.PackStart(userbox, false, false, 2)
@@ -103,8 +118,7 @@ func main() {
 	lenlabel := gtk.NewLabel("Length")
 	lenlabel.SetJustify(gtk.JUSTIFY_RIGHT)
 	lenname := gtk.NewEntry()
-	lenname.SetWidthChars(4) // grrr... doesn't work
-	lenname.SetText("16")
+	lenname.SetText(pwdLenCL)
 	lenbox.Add(lenlabel)
 	lenbox.Add(lenname)
 	credbox.PackStart(lenbox, false, false, 2)
@@ -113,6 +127,7 @@ func main() {
 	speclabel := gtk.NewLabel("Special Chars")
 	speclabel.SetJustify(gtk.JUSTIFY_RIGHT)
 	specname := gtk.NewEntry()
+	specname.SetText(specCL)
 	specialbox.Add(speclabel)
 	specialbox.Add(specname)
 	credbox.PackStart(specialbox, false, false, 2)
