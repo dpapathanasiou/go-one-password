@@ -10,9 +10,10 @@ package main
 import (
 	"flag"
 	"fmt"
-	"strings"
 	"github.com/dpapathanasiou/go-one-password/onepassword"
 	"github.com/howeyc/gopass"
+	"log"
+	"strings"
 )
 
 // getPassphrase requests the passphrase string as a standard input prompt instead of the command line args
@@ -20,8 +21,11 @@ import (
 func getPassphrase() string {
 	fmt.Print("What's your passphrase? (or ctrl-c to quit) ")
 	// do not display typed characters to appear on the screen
-	passphrase := string(gopass.GetPasswd())
-	return strings.TrimSpace(passphrase)
+	passphrase, err := gopass.GetPasswd()
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	return strings.TrimSpace(string(passphrase))
 }
 
 func main() {
