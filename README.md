@@ -13,25 +13,28 @@ Building and Installing
 
 This program now comes in two versions, a command line interface (cli), and a graphical user interface (gui).
 
-In order to build the gui version, you will need this library (optional):
-
 ```sh
-$ go get github.com/mattn/go-gtk/gtk
+go get github.com/howeyc/gopass@latest
+go get github.com/mattn/go-gtk/gtk@latest
 ```
 
-Note that [go-gtk](http://mattn.github.io/go-gtk/) requires that the [GTK-Development packages](https://github.com/mattn/go-gtk#install) for your system are already installed.
+Note that [go-gtk](http://mattn.github.io/go-gtk/) requires that the [GTK-Development packages](https://www.gtk.org/docs/installations/) for your system are already installed.
 
-Next, import these two repositories (required):
+### GTK for macOS
+
+In addition to the [official installer](https://www.gtk.org/docs/installations/macos/), it is also available on [Homebrew](https://formulae.brew.sh/formula/gtk+):
 
 ```sh
-$ go get github.com/howeyc/gopass
-$ go get github.com/dpapathanasiou/go-one-password
+brew install gtk+
+export LDFLAGS="-L/usr/local/opt/libffi/lib"
+export CPPFLAGS="-I/usr/local/opt/libffi/include"
+export PKG_CONFIG_PATH="/usr/local/opt/libffi/lib/pkgconfig"
 ```
 
 Use the [Makefile](Makefile) to build either or both versions:
 
 ```sh
-$ make all # build both the cli and gui versions
+make all # build both the cli and gui versions
 $ make cli # build just the cli version
 $ make gui # build just the gui version
 ```
