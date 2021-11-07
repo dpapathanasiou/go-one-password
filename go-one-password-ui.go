@@ -138,8 +138,7 @@ func main() {
 	swin.SetShadowType(gtk.SHADOW_IN)
 	textview := gtk.NewTextView()
 	buffer := textview.GetBuffer()
-	highlight := buffer.CreateTag("highlighted", map[string]string{
-		"background": "#FFFF99", "weight": "bold"})
+	highlight := buffer.CreateTag("highlighted", map[string]interface{}{"background": "#FFFF99", "weight": "bold"})
 	swin.Add(textview)
 	resbox.Add(swin)
 
